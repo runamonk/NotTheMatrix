@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NotTheMatrix": {
+      "commandName": "Project",
+      "commandLineArgs": "/s"
+    }
+  }
+}
