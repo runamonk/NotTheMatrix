@@ -14,12 +14,12 @@ namespace NotTheMatrix
 
             if (args != null && args.Length == 1 && args[0].ToLower() == "/p")
             {
-                Application.Run(new FormScreenSaver("preview"));
+                Application.Run(new NotTheMatrix("preview"));
             }
             else
             if (args != null && args.Length == 1 && args[0].ToLower() == "/s")
             {
-                Application.Run(new FormScreenSaver("fullscreen"));
+                Application.Run(new NotTheMatrix("fullscreen"));
             }
             else
                 Application.Exit();
