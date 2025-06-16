@@ -30,22 +30,27 @@ namespace NotTheMatrix
 
         async Task doTheThings()
         {
+            // delay the start randomly, this way we get a staggered effect           
+            Task.Delay(new Random().Next(100, 100000)).Wait();
+
             iteration = 0;
             while (true)
             {
+                Task.Delay(speed).Wait();
+
                 // clear if column is full or random chance occurs
                 if (rows >= maxrows || new Random().Next(0, 1000) < 5)
-                    Clear();
+                    await Task.Run(() => Clear());
 
-                PaintCharacter(GetRandomCharacter(), rows, Constants.FOREGROUND_COLOR);
+                await Task.Run(() => Paint(GetRandomCharacter(), rows, Constants.FOREGROUND_COLOR));
 
                 if (iteration >= 100)
                 {
                     GC.Collect();
                     iteration = 0;
                 }
-
-                await Task.Delay(speed);
+                if (new Random().Next(0, 1000) < 10)
+                    SetRandomSpeed();
             }
         }
 
@@ -54,13 +59,12 @@ namespace NotTheMatrix
             if (rows == 0)
                 return;
 
-            PaintCharacter(lastCharacter, rows - 1, Constants.CLEAR_COLOR);
-            Thread.Sleep(100);
-            PaintCharacter(Constants.CLEAR_COLUMN, rows, Constants.BACKGROUND_COLOR);
+            Paint(lastCharacter, rows - 1, Constants.CLEAR_COLOR);
+            Task.Delay(25).Wait();
+            Paint(Constants.CLEAR_COLUMN, rows, Constants.BACKGROUND_COLOR);
 
             iteration++;
             rows = 0;
-            SetRandomSpeed();
         }
 
         private string GetRandomCharacter()
@@ -69,7 +73,7 @@ namespace NotTheMatrix
             return Constants.ALLOWED_CHARS[random.Next(Constants.ALLOWED_CHARS.Length)].ToString();
         }
 
-        private void PaintCharacter(string character, int row, Color color)
+        private void Paint(string character, int row, Color color)
         {
             try
             {
@@ -99,15 +103,12 @@ namespace NotTheMatrix
 
         private void SetRandomSpeed()
         {
-            speed = (new Random().Next(100, 2000));
+            speed = (new Random().Next(25, 2000));
         }
 
         public async void Start()
         {
-            // delay the start randomly, this way we get a staggered effect           
-            await Task.Delay(new Random().Next(100, 100000));
             await Task.Run(() => doTheThings());
         }
-
     }
 }
