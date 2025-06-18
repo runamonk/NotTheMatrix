@@ -70,7 +70,7 @@ namespace NotTheMatrix
         private string GetRandomCharacter()
         {
             Random random = new Random();
-            return Constants.ALLOWED_CHARS[random.Next(Constants.ALLOWED_CHARS.Length)].ToString();
+            return Constants.ALLOWED_CHARS[random.Next(0, Constants.ALLOWED_CHARS.Length - 1)].ToString(); 
         }
 
         private void Paint(string character, int row, Color color)
