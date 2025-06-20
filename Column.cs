@@ -37,7 +37,7 @@ namespace NotTheMatrix
             while (true)
             {
                 Task.Delay(speed).Wait();
-
+               
                 // clear if column is full or random chance occurs
                 if (rows >= maxrows || new Random().Next(0, 1000) < 5)
                     await Task.Run(() => Clear());

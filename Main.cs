@@ -19,14 +19,14 @@ namespace NotTheMatrix
             TopMost = true;
             ShowInTaskbar = false;
             ControlBox = false;
-
+            
             if (runType == "fullscreen")
             {
                 foreach (var s in Screen.AllScreens)
-                    width += s.WorkingArea.Width;
+                    width += s.Bounds.Width;
 
                 foreach (var s in Screen.AllScreens)
-                    height += s.WorkingArea.Height;
+                    height += s.Bounds.Height;
 
                 WindowState = FormWindowState.Maximized;
             }
@@ -49,7 +49,7 @@ namespace NotTheMatrix
 
             maxcols = width / Constants.DEFAULT_SIZE;
 
-            Task.Run(async () => await StartColumns());
+            Task.Run(StartColumns);
         }
 
         private async Task StartColumns()
