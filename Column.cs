@@ -62,7 +62,7 @@ namespace NotTheMatrix
             Paint(lastCharacter, rows - 1, Constants.CLEAR_COLOR);
             Task.Delay(25).Wait();
             Paint(Constants.CLEAR_COLUMN, rows, Constants.BACKGROUND_COLOR);
-
+            Task.Delay(new Random().Next(2000, 100000)).Wait();
             iteration++;
             rows = 0;
         }
@@ -82,14 +82,16 @@ namespace NotTheMatrix
                 {
                     using (Graphics g = Graphics.FromHdc(hdc))
                     {
-                        // clear the column.
                         if (character == Constants.CLEAR_COLUMN)
                         {
                             g.FillRectangle(new SolidBrush(Constants.BACKGROUND_COLOR), new Rectangle(column * Constants.DEFAULT_SIZE, 0, Constants.DEFAULT_SIZE, height));
                         }
                         else
                         {
+                            g.DrawString(character, Constants.FONT, new SolidBrush(Constants.NEW_LETTER), column * Constants.DEFAULT_SIZE, row * Constants.DEFAULT_SIZE);
+                            Task.Delay(25).Wait(); 
                             g.DrawString(character, Constants.FONT, new SolidBrush(color), column * Constants.DEFAULT_SIZE, row * Constants.DEFAULT_SIZE);
+                            Task.Delay(25).Wait();
                         }
                     }
                     ReleaseDC(IntPtr.Zero, hdc);
